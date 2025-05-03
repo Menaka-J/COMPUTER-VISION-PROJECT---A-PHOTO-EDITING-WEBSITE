@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Craft</title>
+    <link rel="icon" href="https://i.pinimg.com/736x/aa/8e/62/aa8e62fc68a063a672e837468d6a78cc.jpg">
+    <link rel="stylesheet" href="page2css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class='navigation-bar2'>
+        <nav>
+            <!-- <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div> -->
+
+            <div class="gallery">
+                <i class="fa-regular fa-image"></i>
+                <label for="gallery-input">Editor</label>
+            </div>
+
+            <!-- <div class="edits" onclick="showEdits()">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <p>My Edits</p>
+            </div> -->
+        </nav>
+    </div>
+
+    <div class="upload-box" id="upload-box" onclick="document.getElementById('file-input').click()">
+        <div class="upload-content">
+            <div class="plus">+</div>
+            <p>Upload Image</p>
+        </div>
+        <input type="file" id="file-input" style="display: none" accept="image/*" onchange="handleImageUpload(event)">
+    </div>
+
+    <div id="upload-warning-container"></div> -->
+
+    <img id="uploaded-image"
+        style="display: none; max-width: 90%; height: auto; margin: 30px auto; display: block; border-radius: 10px;" />
+
+    <!-- <div id="image-container" style="position: relative; display: inline-block; max-width: 90%; margin: 30px auto;">
+        <img id="uploaded-image" style="display: none; max-width: 90%; height: auto; margin: 30px auto; display: block; border-radius: 10px;" />
+        Crop rectangle canvas overlay -->
+    <!-- <canvas id="crop-canvas"
+            style="position: absolute; top: 0; left: 200px; cursor: crosshair; display: none;"></canvas>
+    </div> -->
+    
+
+    <div class='editing-tools'>
+        <nav class="mar">
+            <div class="Light" onclick="showLightTools()">
+                <span class="sun-emoji">🌞</span>
+                <p>Light</p>
+            </div>
+
+            <div class="Color" onclick="showColorTools()">
+                <span class="palette-emoji">🎨</span>
+                <p>Color</p>
+            </div>
+
+            <div class="Water" onclick="showBlurTools()">
+                <span class="emoji-drop">💧</span>
+                <p>Blur</p>
+            </div>
+
+            <div class="Sparkle" onclick="showEffectTools()">
+                <span class="emoji-sparkle">✨</span>
+                <p>Effect</p>
+            </div>
+
+            <div class="Zoom" onclick="showDetailTools()">
+                <span class="emoji-zoom">🔍</span>
+                <p>Detail</p>
+            </div>
+
+            <div class="Frame" onclick="showCanvasTools()">
+                <span class="emoji-frame">🖼️</span>
+                <p>Canvas</p>
+            </div>
+
+            <div class="Mask" onclick="showFilterTools()">
+                <span class="emoji-mask">🎭</span>
+                <p>Filters</p>
+            </div>
+
+            <div class="Wrench" onclick="showToolTools()">
+                <span class="emoji-wrench">🔧</span>
+                <p>Tools</p>
+            </div>
+
+            <div class="Download" onclick="downloadImage()">
+                <span>⬇️</span>
+                <p>Download</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Light Tools Sub-Menu -->
+    <div class="light-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Brightness">
+                <span>🌞</span>
+                <p>Brightness</p>
+                <input type="range" id="brightness-slider" min="0" max="2" step="0.1" value="1"
+                    onchange="adjust_brightness()">
+            </div>
+
+            <div class="Exposure">
+                <span>🔦</span>
+                <p>Exposure</p>
+                <input type="range" id="exposure-slider" min="0" max="2" step="0.1" value="1"
+                    onchange=" adjust_exposure()">
+            </div>
+
+            <div class="Contrast">
+                <span>🌗</span>
+                <p>Contrast</p>
+                <input type="range" id="contrast-slider" min="0" max="2" step="0.1" value="1"
+                    onchange="adjust_contrast()">
+            </div>
+
+            <div class="Highlights">
+                <span>💡</span>
+                <p>Highlights</p>
+                <input type="range" id="highlights-slider" min="0" max="2" step="0.1" value="1"
+                    onchange="adjust_highlights()">
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Color submenu -->
+    <div class="color-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Hue">
+                <span>🌈</span>
+                <p>Hue</p>
+                <input type="range" id="hue-slider" min="0" max="360" step="1" value="180" onchange="adjust_hue()">
+            </div>
+
+            <div class="Saturation">
+                <span>🧪</span>
+                <p>Saturation</p>
+                <input type="range" id="saturation-slider" min="0" max="2" step="0.1" value="1"
+                    onchange="adjust_saturation()">
+            </div>
+
+            <div class="Luminance">
+                <span>💡</span>
+                <p>Luminance</p>
+                <input type="range" id="luminance-slider" min="0" max="2" step="0.1" value="1"
+                    onchange="adjust_luminance()">
+            </div>
+
+            <div class="ColorGrading">
+                <span>🎨</span>
+                <p>Color Grading</p>
+                <input type="range" id="color-grading-slider" min="0" max="2" step="0.1" value="1"
+                    onchange="apply_color_grading()">
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Blur submenu -->
+    <div class="blur-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Blur">
+                <span>💧</span>
+                <p>Blur</p>
+                <input type="range" id="blur-slider" min="0" max="10" step="1" value="0" onchange="apply_blur()">
+            </div>
+
+            <div class="Noise">
+                <span>🚫</span>
+                <p>Noise Reduction</p>
+                <input type="range" id="noise-reduction-slider" min="0" max="10" step="1" value="0"
+                    onchange="noise_reduction()">
+            </div>
+
+            <div class="Smooth">
+                <span>🌸</span>
+                <p>Smoothness</p>
+                <input type="range" id="smoothness-slider" min="0" max="10" step="1" value="0" onchange="smoothness()">
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Effect submenu -->
+    <div class="effect-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Grayscale" onclick="applyEdits({ grayscale: true })">
+                <span>🔘</span>
+                <p>Grayscale</p>
+            </div>
+
+            <div class="Sepia" onclick="applyEdits({ sepia: true })">
+                <span>🟤</span>
+                <p>Sepia</p>
+            </div>
+
+            <div class="Negative" onclick="applyEdits({ negative: true })">
+                <span>🔄</span>
+                <p>Negative</p>
+            </div>
+
+            <div class="Fade" onclick="applyEdits({ fade: 0.5 })">
+                <span>🌫️</span>
+                <p>Fade</p>
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+                </ ```html </div>
+        </nav>
+    </div>
+
+    <!-- Detail submenu -->
+    <div class="detail-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Sharpening">
+                <span>🔪</span>
+                <p>Sharpening</p>
+                <input type="range" id="sharpness-slider" min="0" max="10" step="1" value="0"
+                    onchange="adjustSharpening()">
+            </div>
+
+            <div class="Clarity">
+                <span>🔍</span>
+                <p>Clarity</p>
+                <input type="range" id="clarity-slider" min="0" max="10" step="1" value="0" onchange="adjustClarity()">
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Canvas submenu -->
+    <div class="canvas-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Aspect11" onclick="applyEdits({ aspect_ratio: '1:1' })">
+                <span>1️⃣:1️⃣</span>
+                <p>1:1</p>
+            </div>
+
+            <div class="Aspect45" onclick="applyEdits({ aspect_ratio: '4:5' })">
+                <span>4️⃣:5️⃣</span>
+                <p>4:5</p>
+            </div>
+
+            <div class="Aspect916" onclick="applyEdits({ aspect_ratio: '9:16' })">
+                <span>9️⃣:1️⃣6️⃣</span>
+                <p>9:16</p>
+            </div>
+
+            <div class="Aspect169" onclick="applyEdits({ aspect_ratio: '16:9' })">
+                <span>1️⃣6️⃣:9️⃣</span>
+                <p>16:9</p>
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Filters submenu -->
+    <div class="filter-tools" style="display: none;">
+        <nav class="mar">
+            <div class="CustomFilter" onclick="applyEdits({ custom_filter: 'custom' })">
+                <span>🧪</span>
+                <p>Custom</p>
+            </div>
+
+            <div class="HighlightColor" onclick="applyEdits({ custom_filter: 'highlight_color' })">
+                <span>🌈</span>
+                <p>Highlight</p>
+            </div>
+
+            <div class="Shadows" onclick="applyEdits({ custom_filter: 'shadows' })">
+                <span>🌑</span>
+                <p>Shadows</p>
+            </div>
+
+            <div class="cartoon" onclick="create_cartoon()">
+                <span>🦸</span>
+                <p>Cartoonime</p>
+                <!-- <input type="range" id="carttoneffect" onclick="create_cartoon()"> -->
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Frames submenu -->
+    <div class="frame-tools" style="display: none;">
+        <nav class="mar">
+            <div class="AddFrame" onclick="applyEdits({ frame: 'frame' })">
+                <span>🖼️</span>
+                <p>Frames</p>
+            </div>
+
+            <div class="AddBorder" onclick="applyEdits({ frame: 'border' })">
+                <span>🔲</span>
+                <p>Borders</p>
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Tools submenu -->
+    <div class="tool-tools" style="display: none;">
+        <nav class="mar">
+            <div class="Crop" onclick="applyEdits({ crop: true })">
+                <!-- <span>✂️</span> -->
+                <!-- <p>Crop</p> -->
+            </div>
+
+            <div class="Rotate" onclick="applyEdits({ rotate: 90 })">
+                <span>🔄</span>
+                <p>Rotate</p>
+            </div>
+
+            <div class="FlipH" onclick="applyEdits({ flip_horizontal: true })">
+                <span>↔️</span>
+                <p>Flip H</p>
+            </div>
+
+            <div class="FlipV" onclick="applyEdits({ flip_vertical: true })">
+                <span>↕️</span>
+                <p>Flip V</p>
+            </div>
+
+            <div class="Collage" onclick="create_collage()">
+                <!-- <span>🧩</span> -->
+                <!-- <p>Collage</p> -->
+            </div>
+
+            <div class="Back" onclick="hideAllSubMenus()">
+                <span>🔙</span>
+                <p>Back</p>
+            </div>
+        </nav>
+    </div>
+
+    <div id="edits-container" class="edits-container"></div>
+    <div id="toast" class="toast">Please upload an image first.</div>
+
+    <script src="pg2.js"></script>
+</body>
+
+</html>
